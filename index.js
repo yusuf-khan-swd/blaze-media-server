@@ -20,6 +20,13 @@ async function run() {
       const result = await postsCollection.insertOne(post);
       res.send(result);
     });
+
+    app.get("/posts", async (req, res) => {
+      const query = {};
+      const result = await postsCollection.find(query).toArray();
+      res.send(result);
+    })
+
   }
   finally {
 
