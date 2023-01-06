@@ -27,11 +27,6 @@ async function run() {
       res.send(result);
     })
 
-    app.delete("/posts", async (req, res) => {
-      const query = {};
-      const result = await postsCollection.deleteMany(query);
-      res.send(result);
-    })
 
   }
   finally {
