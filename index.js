@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -25,7 +25,24 @@ async function run() {
       const query = {};
       const result = await postsCollection.find(query).toArray();
       res.send(result);
-    })
+    });
+
+    app.put("/posts", async (req, res) => {
+      const { postId, updatedLikes } = req.body;
+
+      const filter = { _id: ObjectId(postId) };
+      const options = { upsert: true };
+
+      const updatedDoc = {
+        $set: {
+          likes: updatedLikes
+        }
+      }
+
+      const result = await postsCollection.updateOne(filter, updatedDoc, options);
+      res.send(result);
+
+    });
 
 
   }
